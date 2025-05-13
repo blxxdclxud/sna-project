@@ -1,9 +1,27 @@
 stages:
   - lint
+  - test
+  - build
 
-linting:
+lint:
   stage: lint
   image: golangci/golangci-lint
-
   script:
-    - golangci-lint run --issues-exit-code=0 ./...
+    - golangci-lint run ./...
+
+unit_tests:
+  stage: test
+  image: golang:1.21
+  script:
+    - go test -v ./...
+
+integration_tests:
+  stage: test
+  image: docker/compose:1.29.2
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - docker-compose -f docker-compose.test.yml up --abort-on-container-exit --exit-code-from test-runner
