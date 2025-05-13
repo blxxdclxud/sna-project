@@ -1,17 +1,4 @@
-version: '3.8'
-
 services:
-    rabbitmq:
-        image: rabbitmq:3-management
-        user: rabbitmq
-        networks:
-            - internal
-        healthcheck:
-            test: [ "CMD", "rabbitmq-diagnostics", "check_port_connectivity" ]
-            interval: 10s
-            timeout: 5s
-            retries: 5
-
     host:
         build:
             context: ..
@@ -23,7 +10,7 @@ services:
         networks:
             - internal
             - external
-        command: [ "-rmq", "amqp://guest:guest@rabbitmq:5672/" ]
+        command: ["./server", "-rmq", "amqp://guest:guest@rabbitmq:5672/"]
         ports:
             - "8080:8080"
 
@@ -37,7 +24,7 @@ services:
                 condition: service_healthy
         networks:
             - internal
-        command: [ "-rmq", "amqp://guest:guest@rabbitmq:5672/" ]
+        command: ["./worker", "-rmq", "amqp://guest:guest@rabbitmq:5672/"]
         restart: unless-stopped
 
     worker2:
@@ -50,7 +37,7 @@ services:
                 condition: service_healthy
         networks:
             - internal
-        command: [ "-rmq", "amqp://guest:guest@rabbitmq:5672/" ]
+        command: ["./worker", "-rmq", "amqp://guest:guest@rabbitmq:5672/"]
         restart: unless-stopped
 
     test-server:
@@ -63,9 +50,4 @@ services:
                 condition: service_healthy
         networks:
             - internal
-        command: go test ./server/messaging/tests
-
-networks:
-    internal:
-        internal: true
-    external:
+        command: ["go", "test", "./server/messaging/tests"]
