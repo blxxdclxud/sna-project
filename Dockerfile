@@ -1,20 +1,17 @@
-# Базовый образ
-FROM golang:1.24 AS base
+# Dockerfile
+
+FROM golang:1.21 AS base
 WORKDIR /app
 COPY . .
 RUN go mod download
 
-# Для сервера
+# Билд сервера (если нужно)
 FROM base AS server
-RUN go build -o /app/server ./cmd/server
-CMD ["/app/server"]
+RUN go build -o server ./cmd/server
 
-# Для воркера
+# Билд воркера
 FROM base AS worker
-RUN go build -o /app/worker ./cmd/worker
-RUN chmod +x /app/worker  # Даем права на выполнение
-CMD ["/app/worker"]
+RUN go build -o worker ./cmd/worker
 
-# Для тестов (тест-сервер)
+# Билд для тестов
 FROM base AS test
-CMD ["go", "test", "./server/messaging/tests"]
