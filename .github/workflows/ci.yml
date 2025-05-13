@@ -20,5 +20,5 @@ jobs:
       - name: Build all services
         run: docker compose -f deployments/docker-compose.yml build
 
-      - name: Run test server
-        run: docker compose -f deployments/docker-compose.yml up --abort-on-container-exit --exit-code-from test-server test-server
+      - name: Run test with worker
+        run: docker compose -f deployments/docker-compose.yml up --abort-on-container-exit --exit-code-from test-server test-server worker1
