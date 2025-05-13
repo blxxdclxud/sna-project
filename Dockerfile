@@ -1,5 +1,5 @@
 # Базовый слой
-FROM golang:1.20-alpine AS base
+FROM golang:1.24-alpine AS base
 WORKDIR /app
 COPY . .
 RUN go mod download
