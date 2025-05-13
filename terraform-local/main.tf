@@ -1,7 +1,7 @@
 # Создаем сети
 resource "docker_network" "internal" {
   name     = "internal"
-  internal = true
+  internal = true       # Containers on this network do not have access to the external Internet
 }
 
 resource "docker_network" "external" {
@@ -71,7 +71,7 @@ resource "docker_container" "scheduler" {
 
 # Workers
 resource "docker_container" "worker" {
-  count = 2
+  count = 10
   name  = "worker-${count.index}"
   image = docker_image.worker.image_id
   networks_advanced {
