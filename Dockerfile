@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 RUN go mod download
 
-# Для сервера (если нужно)
+# Для сервера
 FROM base AS server
 RUN go build -o server ./cmd/server
 CMD ["./server"]
@@ -14,6 +14,6 @@ FROM base AS worker
 RUN go build -o worker ./cmd/worker
 CMD ["./worker"]
 
-# Для тестов
+# Для тестов (тест-сервер)
 FROM base AS test
 CMD ["go", "test", "./server/messaging/tests"]

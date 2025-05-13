@@ -53,6 +53,18 @@ services:
         command: [ "-rmq", "amqp://guest:guest@rabbitmq:5672/" ]
         restart: unless-stopped
 
+    test-server:
+        build:
+            context: ..
+            dockerfile: Dockerfile
+            target: test
+        depends_on:
+            rabbitmq:
+                condition: service_healthy
+        networks:
+            - internal
+        command: go test ./server/messaging/tests
+
 networks:
     internal:
         internal: true
