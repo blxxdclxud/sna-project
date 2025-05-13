@@ -12,6 +12,7 @@ CMD ["./server"]
 # Для воркера
 FROM base AS worker
 RUN go build -o worker ./cmd/worker
+RUN chmod +x ./worker  # Даем права на выполнение
 CMD ["./worker"]
 
 # Для тестов (тест-сервер)
