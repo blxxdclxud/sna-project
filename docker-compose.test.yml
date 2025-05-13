@@ -38,7 +38,7 @@ services:
       - MODE=test
 
   test-runner:
-    image: golang:1.21
+    image: golang:1.24
     depends_on:
       - server
       - worker
