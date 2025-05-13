@@ -7,9 +7,9 @@ services:
             - "5672:5672"
             - "15672:15672"
         healthcheck:
-            test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+            test: ["CMD", "rabbitmqctl", "status"]
             interval: 5s
-            timeout: 5s
+            timeout: 10s
             retries: 5
         networks:
             - internal
@@ -24,19 +24,16 @@ services:
                 condition: service_healthy
         networks:
             - internal
-        command: ["sh", "-c", "sleep 2 && go test ./..."]
 
     worker:
         build:
             context: ..
             dockerfile: Dockerfile
-            target: worker   # теперь это РЕАЛЬНЫЙ runtime-слой
+            target: worker
         depends_on:
-            rabbitmq:
-                condition: service_healthy
+            - test  # Ждёт завершения тестов
         networks:
             - internal
-        entrypoint: [ "sh", "-c", "sleep 3 && ./worker" ]
+
 networks:
     internal:
-        driver: bridge
