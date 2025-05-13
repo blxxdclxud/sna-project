@@ -1,16 +1,16 @@
 # Создаем сети
 resource "docker_network" "internal" {
   name     = "internal"
-  internal = true       # Containers on this network do not have access to the external Internet
+  internal = true
 }
 
 resource "docker_network" "external" {
   name = "external"
 }
 
-# Образы (добавьте этот блок)
+# Images
 resource "docker_image" "scheduler" {
-  name = "your-image/scheduler:latest"  # Замените на ваш образ
+  name = var.scheduler_image_name
   build {
     context    = "../"
     dockerfile = "Dockerfile"
@@ -19,7 +19,7 @@ resource "docker_image" "scheduler" {
 }
 
 resource "docker_image" "worker" {
-  name = "your-image/worker:latest"  # Замените на ваш образ
+  name = var.worker_image_name
   build {
     context    = "../"
     dockerfile = "Dockerfile"
@@ -71,7 +71,7 @@ resource "docker_container" "scheduler" {
 
 # Workers
 resource "docker_container" "worker" {
-  count = 10
+  count = var.worker_count
   name  = "worker-${count.index}"
   image = docker_image.worker.image_id
   networks_advanced {
