@@ -1,18 +1,13 @@
-# Dockerfile
-
-FROM golang:1.24 AS base
+# Билдер
+FROM golang:1.24 AS builder-worker
 WORKDIR /app
 COPY . .
 RUN go mod download
-
-# Билд сервера (если нужно)
-FROM base AS server
-RUN go build -o server ./cmd/server
-
-# Билд воркера
-FROM base AS worker
 RUN go build -o worker ./cmd/worker
-RUN chmod +x worker
 
-# Билд для тестов
-FROM base AS test
+# Финальный образ
+FROM alpine:3.19 AS worker
+WORKDIR /app
+COPY --from=builder-worker /app/worker ./worker
+RUN chmod +x ./worker
+CMD ["./worker"]

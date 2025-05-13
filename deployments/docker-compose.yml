@@ -30,14 +30,13 @@ services:
         build:
             context: ..
             dockerfile: Dockerfile
-            target: worker
+            target: worker   # теперь это РЕАЛЬНЫЙ runtime-слой
         depends_on:
             rabbitmq:
                 condition: service_healthy
         networks:
             - internal
-        entrypoint: ["sh", "-c", "sleep 3 && ./worker"]
-
+        entrypoint: [ "sh", "-c", "sleep 3 && ./worker" ]
 networks:
     internal:
         driver: bridge
