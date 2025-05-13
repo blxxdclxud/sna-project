@@ -1,6 +1,6 @@
 # Dockerfile
 
-FROM golang:1.21 AS base
+FROM golang:1.24 AS base
 WORKDIR /app
 COPY . .
 RUN go mod download
