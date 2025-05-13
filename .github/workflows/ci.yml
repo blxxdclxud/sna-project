@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      rabbitmq:
+        image: rabbitmq:3-management
+        ports:
+          - 5672:5672
+        env:
+          RABBITMQ_DEFAULT_USER: guest
+          RABBITMQ_DEFAULT_PASS: guest
+        options: >-
+          --health-cmd="rabbitmqctl status"
+          --health-interval=5s
+          --health-timeout=10s
+          --health-retries=10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Download dependencies
+        run: go mod download
+
+      - name: Wait for RabbitMQ
+        run: |
+          echo "Waiting for RabbitMQ..."
+          for i in {1..15}; do
+            nc -z localhost 5672 && echo "RabbitMQ is ready!" && break || sleep 3
+          done
+
+      - name: Run Go tests (fake server)
+        run: go test ./server/messaging/tests
+
+      - name: Run worker
+        run: go run ./cmd/worker/main.go
