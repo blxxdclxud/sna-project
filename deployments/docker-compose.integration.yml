@@ -19,7 +19,6 @@ services:
       context: ..
       dockerfile: Dockerfile
       target: integration-test
-    network_mode: host
     depends_on:
       rabbitmq:
         condition: service_healthy
