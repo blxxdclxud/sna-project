@@ -22,7 +22,7 @@ Polling for job result...
 Current status: COMPLETED
 Job completed! Result: 4"
 
-CLIENT_OUTPUT=$(go run cmd/client/main.go -file lua-examples/simpleTest.lua)
+CLIENT_OUTPUT=$(go run cmd/client/main.go -file lua-examples/simpleTest.lua -host server:8080)
 
 echo "Client output:"
 echo "$CLIENT_OUTPUT"

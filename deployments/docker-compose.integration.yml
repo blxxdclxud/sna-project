@@ -14,14 +14,25 @@ services:
     networks:
       - internal
 
+  server:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: server
+    networks:
+      - internal
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
   integration-test:
     build:
       context: ..
       dockerfile: Dockerfile
       target: integration-test
     depends_on:
-      rabbitmq:
-        condition: service_healthy
+      server:
+        condition: service_started
     networks:
       - internal
 
