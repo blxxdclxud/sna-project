@@ -31,7 +31,18 @@ services:
             dockerfile: Dockerfile
             target: worker
         depends_on:
-            - test  # Ждёт завершения тестов
+            - test
+        networks:
+            - internal
+
+    integration-test:
+        build:
+            context: ..
+            dockerfile: Dockerfile
+            target: integration
+        depends_on:
+            rabbitmq:
+                condition: service_healthy
         networks:
             - internal
 

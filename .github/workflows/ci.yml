@@ -10,11 +10,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      docker:
-        image: docker:24.0.7
-        options: --privileged
-
     steps:
       - uses: actions/checkout@v4
 
@@ -27,6 +22,6 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose version
 
-      - name: Run tests and build all containers
+      - name: Run tests and integration checks
         run: |
-          docker-compose -f deployments/docker-compose.yml up --build --abort-on-container-exit
+          docker-compose -f deployments/docker-compose.yml up --build --abort-on-container-exit --exit-code-from integration-test

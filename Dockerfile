@@ -14,7 +14,7 @@ RUN go build -o worker ./cmd/worker
 
 # Сборка тестов
 FROM base AS build-test
-RUN go test -c -o testbin ./server/messaging/tests  # Исправлен путь к тестам
+RUN go test -c -o testbin ./server/messaging/tests  # Юнит-тесты
 
 # Финальный образ server
 FROM alpine:3.19 AS server
@@ -29,8 +29,16 @@ COPY --from=build-worker /app/worker .
 RUN chmod +x ./worker
 CMD ["./worker"]
 
-# Финальный образ теста
+# Финальный образ юнит-теста
 FROM alpine:3.19 AS test
 WORKDIR /app
 COPY --from=build-test /app/testbin .
 CMD ["./testbin", "-test.v"]
+
+# Финальный образ интеграционного теста
+FROM base AS integration
+RUN apk add --no-cache bash
+COPY integration_test.sh .
+COPY lua-examples/ lua-examples/
+RUN chmod +x integration_test.sh
+CMD ["./integration_test.sh"]
