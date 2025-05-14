@@ -25,26 +25,5 @@ services:
         networks:
             - internal
 
-    worker:
-        build:
-            context: ..
-            dockerfile: Dockerfile
-            target: worker
-        depends_on:
-            - test
-        networks:
-            - internal
-
-    integration-test:
-        build:
-            context: ..
-            dockerfile: Dockerfile
-            target: integration
-        depends_on:
-            rabbitmq:
-                condition: service_healthy
-        networks:
-            - internal
-
 networks:
     internal:

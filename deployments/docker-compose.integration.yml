@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    networks:
+      - internal
+
+  integration-test:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: integration-test
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - internal
+
+networks:
+  internal:
