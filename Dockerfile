@@ -39,5 +39,6 @@ CMD ["./testbin", "-test.v"]
 FROM golang:1.24-alpine AS integration-test
 WORKDIR /app
 COPY . .
+RUN ls -l /app/scripts/
 RUN chmod +x ./scripts/integration_test.sh
 CMD ["./scripts/integration_test.sh"]
