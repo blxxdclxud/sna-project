@@ -18,7 +18,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.7
-      - name: build client part of Go file
+      - name: Build client part of Go file
         run: go build cmd/client/main.go
       - name: Initialize Terraform
         working-directory: terraform-local
@@ -27,12 +27,6 @@ jobs:
         working-directory: terraform-local
         run: find .terraform -type f -exec chmod +x {} \; &&
              terraform apply -auto-approve
-      - name: Print worker logs
-        run: |
-          echo "=== Worker 0 logs ==="
-          docker logs worker-0 || true
-          echo "=== Worker 1 logs ==="
-          docker logs worker-1 || true
       - name: Wait for RabbitMQ to be healthy
         run: |
           echo "Waiting for RabbitMQ to be healthy..."
@@ -51,6 +45,10 @@ jobs:
           docker logs worker-0 || true
           docker logs worker-1 || true
           docker logs rabbitmq || true
+      - name: Wait for workers to register
+        run: |
+          echo "Waiting for workers to register with RabbitMQ..."
+          sleep 15
       - name: Run health checks on Scheduler
         run: |
           echo "Checking Scheduler service health"
