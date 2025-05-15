@@ -38,6 +38,13 @@ jobs:
             echo "Waiting..."
             sleep 5
           done
+      - name: Print logs of scheduler and workers
+        run: |
+          docker ps
+          docker logs scheduler || true
+          docker logs worker-0 || true
+          docker logs worker-1 || true
+          docker logs rabbitmq || true
       - name: Run health checks on Scheduler
         run: |
           echo "Checking Scheduler service health"
