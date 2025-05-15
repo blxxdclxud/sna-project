@@ -33,7 +33,7 @@ func failOnError(err error, msg string) {
 func main() {
 	var rmq_host string
 
-	flag.StringVar(&rmq_host, "rmq", "amqp://guest:guest@rabbitmq:5672/", "rabbitmq host address")
+	flag.StringVar(&rmq_host, "rmq", "amqp://guest:guest@localhost:5672/", "rabbitmq host address")
 
 	flag.Parse()
 	fmt.Println("rmq host:", rmq_host)
