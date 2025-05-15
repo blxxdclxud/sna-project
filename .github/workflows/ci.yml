@@ -27,6 +27,12 @@ jobs:
         working-directory: terraform-local
         run: find .terraform -type f -exec chmod +x {} \; &&
              terraform apply -auto-approve
+      - name: Print worker logs
+        run: |
+          echo "=== Worker 0 logs ==="
+          docker logs worker-0 || true
+          echo "=== Worker 1 logs ==="
+          docker logs worker-1 || true
       - name: Wait for RabbitMQ to be healthy
         run: |
           echo "Waiting for RabbitMQ to be healthy..."
