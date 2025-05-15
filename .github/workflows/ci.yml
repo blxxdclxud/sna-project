@@ -18,6 +18,9 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.7
+      - name: Initialize Terraform
+        working-directory: terraform-local
+        run: terraform init
       - name: Terraform Apply
         working-directory: terraform-local
         run: terraform apply -auto-approve
