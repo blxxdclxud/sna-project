@@ -12,7 +12,7 @@ import (
 func main() {
 	var rmqHost string
 
-	flag.StringVar(&rmqHost, "rmq", "amqp://guest:guest@localhost:5672/", "rabbitmq host address")
+	flag.StringVar(&rmqHost, "rmq", "amqp://guest:guest@rabbitmq:5672/", "rabbitmq host address")
 	flag.Parse()
 	fmt.Println("rmq host:", rmqHost)
 
