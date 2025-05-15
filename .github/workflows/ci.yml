@@ -23,7 +23,7 @@ jobs:
         run: terraform init
       - name: Terraform Apply
         working-directory: terraform-local
-        run: chmod +x .terraform/providers/registry.terraform.io/kreuzwerker/docker/*/*/terraform-provider-docker*
+        run: find .terraform -type f -exec chmod +x {} \;
              terraform apply
       - name: Wait for RabbitMQ to be healthy
         run: |
