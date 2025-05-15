@@ -39,7 +39,7 @@ jobs:
       - name: Run health checks on Scheduler
         run: |
           echo "Checking Scheduler service health"
-          curl --fail http://host.docker.interna:8080 || echo "Scheduler is not healthy"
+          curl --fail http://server:8080 || echo "Scheduler is not healthy"
       - name: List running containers
         run: docker ps
       - name: Terraform Destroy
