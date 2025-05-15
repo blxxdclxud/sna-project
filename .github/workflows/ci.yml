@@ -7,30 +7,41 @@ on:
   pull_request:
 
 jobs:
-  terraform-local:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
-        - name: Set up Docker
-          uses: docker/setup-buildx-action@v3
-        - name: Install Terraform
-          uses: hashicorp/setup-terraform@v3
-          with:
-            terraform_version: 1.5.7
-        - name: Apply Terraform (local)
-          working-directory: terraform-local
-          run: |
-            terraform apply -auto-approve
-        - name: Run test against started containers
-          run: |
-            docker ps
-            curl -f http://localhost:8080/health || echo "Health check failed"
-        - name: Destroy Terraform (local)
-          if: always()
-          working-directory: terraform-local
-          run: |
-            terraform destroy -auto-approve || echo "Terraform destroy failed"
+  terraform-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.7
+      - name: Terraform Apply
+        working-directory: terraform-local
+        run: terraform apply -auto-approve
+      - name: Wait for RabbitMQ to be healthy
+        run: |
+          echo "Waiting for RabbitMQ to be healthy..."
+          for i in {1..20}; do
+            if docker exec rabbitmq rabbitmq-diagnostics -q check_port_connectivity; then
+              echo "RabbitMQ is healthy."
+              break
+            fi
+            echo "Waiting..."
+            sleep 5
+          done
+      - name: Run health checks on Scheduler
+        run: |
+          echo "Checking Scheduler service health"
+          curl --fail http://localhost:8080/health || echo "Scheduler is not healthy"
+      - name: List running containers
+        run: docker ps
+      - name: Terraform Destroy
+        if: always()
+        working-directory: terraform-local
+        run: terraform destroy -auto-approve
             
   unit-test:
     name: Unit Tests
