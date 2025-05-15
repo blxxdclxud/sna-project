@@ -23,7 +23,7 @@ jobs:
         run: terraform init
       - name: Terraform Apply
         working-directory: terraform-local
-        run: find .terraform -type f -exec chmod +x {} \;
+        run: find .terraform -type f -exec chmod +x {} \; &&
              terraform apply
       - name: Wait for RabbitMQ to be healthy
         run: |
