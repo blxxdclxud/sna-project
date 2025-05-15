@@ -24,7 +24,7 @@ jobs:
       - name: Terraform Apply
         working-directory: terraform-local
         run: find .terraform -type f -exec chmod +x {} \; &&
-             terraform apply
+             terraform apply -auto-approve
       - name: Wait for RabbitMQ to be healthy
         run: |
           echo "Waiting for RabbitMQ to be healthy..."
