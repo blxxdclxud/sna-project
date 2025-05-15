@@ -18,6 +18,8 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.7
+      - name: build client part of Go file
+        run: go build cmd/client/main.go
       - name: Initialize Terraform
         working-directory: terraform-local
         run: terraform init
@@ -39,7 +41,7 @@ jobs:
       - name: Run health checks on Scheduler
         run: |
           echo "Checking Scheduler service health"
-          curl --fail http://0.0.0.0:8080 || echo "Scheduler is not healthy"
+          ./main -file lua-examples/factorial.lua || echo "Schechuler does not work"
       - name: List running containers
         run: docker ps
       - name: Terraform Destroy
