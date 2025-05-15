@@ -52,6 +52,7 @@ jobs:
       - name: Run health checks on Scheduler
         run: |
           echo "Checking Scheduler service health"
+          sleep 10
           ./main -file lua-examples/factorial.lua || echo "Schechuler does not work"
       - name: List running containers
         run: docker ps
