@@ -1,19 +1,20 @@
 version: '3.8'
 
 services:
-    rabbitmq:
-        image: rabbitmq:3-management
-        ports:
-            - "5672:5672"
-            - "15672:15672"
-        healthcheck:
-            test: ["CMD", "rabbitmqctl", "status"]
-            interval: 5s
-            timeout: 10s
-            retries: 5
-        networks:
-            - internal
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status" ]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    networks:
+      - monitoring
 
+<<<<<<< HEAD
     test:
         build:
             context: ..
@@ -33,5 +34,65 @@ services:
             - test  # Ждёт завершения тестов
         networks:
             - internal
+=======
+  server:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: server
+    ports:
+      - "8080:8080"     # For API
+      - "2112:2112"     # For metrics
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - monitoring
+
+  test:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: test
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - monitoring
+
+  worker:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: worker
+    depends_on:
+      - test  # Ждёт завершения тестов
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./provisioning:/etc/grafana/provisioning
+      - ./dashboards:/etc/grafana/dashboards
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - monitoring
+
+volumes:
+   grafana-storage:
+
+>>>>>>> 933f140 (Grafana and prometheus added)
 networks:
-    internal:
+  monitoring:
