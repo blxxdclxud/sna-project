@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"gitlab.pg.innopolis.university/e.pustovoytenko/dnp25-project-19/metrics"
 	"net/http"
 	"os"
 	"os/signal"
@@ -92,6 +93,8 @@ func RunServer(rmqHost string) {
 				resultStr = result.TaskReply.Err
 				logger.Warn(fmt.Sprintf("Job %d failed: %s", jobID, resultStr))
 			} else {
+				metrics.JobsCompleted.Inc()
+
 				status = models.StatusCompleted
 				resultStr = result.TaskReply.Results
 				logger.Info(fmt.Sprintf("Job %d completed successfully with result: %s",

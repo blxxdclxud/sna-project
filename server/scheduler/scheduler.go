@@ -3,6 +3,7 @@ package scheduler
 import (
 	"context"
 	"fmt"
+	"gitlab.pg.innopolis.university/e.pustovoytenko/dnp25-project-19/metrics"
 	"strconv"
 	"sync"
 	"time"
@@ -150,6 +151,8 @@ func (s *Scheduler) EnqueueJob(priority sharedModels.JobPriority, script string)
 	// Store in AllJobs map for tracking
 	s.AllJobs[job.JobID] = job
 
+	metrics.JobsSubmitted.Inc()
+
 	return job.JobID, nil
 }
 
@@ -200,6 +203,8 @@ func (s *Scheduler) UpdateJob(jobID int, status sharedModels.JobStatus, result s
 
 // RegisterWorker adds new worker to the system.
 func (s *Scheduler) RegisterWorker(worker sharedModels.Worker) {
+	metrics.WorkerRegistered.Inc()
+
 	s.AvailableWorkers.Add(worker)                  // add to round-robin queue
 	s.TotalWorkers = append(s.TotalWorkers, worker) // add to list of all workers
 }
@@ -265,6 +270,8 @@ func (s *Scheduler) RemoveWorker(workerID string) error {
 	s.TotalWorkers = newTotalWorkers
 
 	logger.Info(fmt.Sprintf("Removed worker %s and rescheduled its tasks", workerID))
+
+	metrics.WorkerRegistered.Desc()
 
 	if removedCount == 0 && !workerHasJobs {
 		return fmt.Errorf("worker %s not found in the pool", workerID)

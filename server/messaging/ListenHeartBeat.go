@@ -3,6 +3,7 @@ package messaging
 import (
 	"encoding/json"
 	"fmt"
+	"gitlab.pg.innopolis.university/e.pustovoytenko/dnp25-project-19/metrics"
 	Rabbit2 "gitlab.pg.innopolis.university/e.pustovoytenko/dnp25-project-19/shared/models/Rabbit"
 	"go.uber.org/zap"
 )
@@ -37,6 +38,7 @@ func (r *Rabbit) ListenHeartBeat(c chan Rabbit2.HealthReportWrapper) {
 				HealthReport: m,
 				Err:          err,
 			}
+			metrics.WorkerHeartbeats.Inc()
 			c <- message
 			fmt.Println(m.TimeStamp, m.WorkerId)
 		}
