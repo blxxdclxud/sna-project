@@ -23,7 +23,7 @@ services:
         networks:
             - internal
             - external
-        command: [ "-rmq", "amqp://guest:guest@rabbitmq:5672/" ]
+        command: ["./server", "-rmq", "amqp://guest:guest@rabbitmq:5672/" ]
         ports:
             - "8080:8080"
 
@@ -37,7 +37,7 @@ services:
                 condition: service_healthy
         networks:
             - internal
-        command: [ "-rmq", "amqp://guest:guest@rabbitmq:5672/" ]
+        command: ["./worker", "-rmq", "amqp://guest:guest@rabbitmq:5672/" ]
         restart: unless-stopped
 
     worker2:
@@ -50,7 +50,7 @@ services:
                 condition: service_healthy
         networks:
             - internal
-        command: [ "-rmq", "amqp://guest:guest@rabbitmq:5672/" ]
+        command: ["./worker", "-rmq", "amqp://guest:guest@rabbitmq:5672/" ]
         restart: unless-stopped
 
 networks:
