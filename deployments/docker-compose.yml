@@ -13,28 +13,7 @@ services:
       retries: 5
     networks:
       - monitoring
-
-<<<<<<< HEAD
-    test:
-        build:
-            context: ..
-            dockerfile: Dockerfile
-            target: test
-        depends_on:
-            rabbitmq:
-                condition: service_healthy
-        networks:
-            - internal
-    worker:
-        build:
-            context: ..
-            dockerfile: Dockerfile
-            target: worker
-        depends_on:
-            - test  # Ждёт завершения тестов
-        networks:
-            - internal
-=======
+      
   server:
     build:
       context: ..
@@ -92,7 +71,6 @@ services:
 
 volumes:
    grafana-storage:
-
->>>>>>> 933f140 (Grafana and prometheus added)
+   
 networks:
   monitoring:
