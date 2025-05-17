@@ -6,7 +6,9 @@ A distributed task scheduling system designed for efficient management and distr
 - [🚀 Project features](#-project-features): in this section you will find the specifics of the project implementation.
 - [⚙️ Requirements](#-requirements): in this section you will find the necessary resources that must be installed in order for the program to work.
 - [💿 How to use the program](#-how-to-use-the-program): in this section you will find a description of how to start the server and how to start a client, as well as how to use additional features.
-    - [way 1](#launching-the-project-via-docker-compose)
+    - [🐋 Launching the project via Docker Compose](#launching-the-project-via-docker-compose)
+    - [🪐 Launching the project via Terraform](#launching-the-project-via-terraform)
+- [📊 How to monitor the system status](#-how-to-monitor-the-system-status)
 
 ## 📄 About the project
 The project was created as part of an academic project activity in which students demonstrate their skills with terraform, docker, CI/CD, Grafana, and Prometheus.
@@ -88,3 +90,5 @@ terraform init
 go build cmd/client/main.go
 ./main -file lua-examples/factorial.lua
 ```
+## 📊 How to monitor the system status
+Надо дописать про то, как использовать инструменты для мониторинга системы
