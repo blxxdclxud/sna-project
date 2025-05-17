@@ -2,11 +2,11 @@
 
 A distributed task scheduling system designed for efficient management and distribution of computational load in a multi-node environment. The project uses Docker to containerize services, Terraform for more flexible system management, Prometheus and Grafana for system state tracking and CI for automated testing.
 ## 🔍 Description
-- [📄 About the project](#About-the-project): in this section you will find a brief description of the project.
-- [🚀 Project features](#Project-features): in this section you will find the specifics of the project implementation.
-- [⚙️ Requirements](#Requirements): in this section you will find the necessary resources that must be installed in order for the program to work.
-- [💿 How to use the program](#How-to-use-the-program): in this section you will find a description of how to start the server and how to start a client, as well as how to use additional features.
-    - [way 1](##launching-the-project-via-docker-compose)
+- [📄 About the project](#-about-the-project): in this section you will find a brief description of the project.
+- [🚀 Project features](#-project-features): in this section you will find the specifics of the project implementation.
+- [⚙️ Requirements](#-requirements): in this section you will find the necessary resources that must be installed in order for the program to work.
+- [💿 How to use the program](#-how-to-use-the-program): in this section you will find a description of how to start the server and how to start a client, as well as how to use additional features.
+    - [way 1](#launching-the-project-via-docker-compose)
 
 ## 📄 About the project
 The project was created as part of an academic project activity in which students demonstrate their skills with terraform, docker, CI/CD, Grafana, and Prometheus.
