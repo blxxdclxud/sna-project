@@ -9,6 +9,10 @@ resource "docker_network" "external" {
 }
 
 # Images
+resource "docker_image" "rabbitmq" {
+  name = "rabbitmq:3-management"
+}
+
 resource "docker_image" "scheduler" {
   name = var.scheduler_image_name
   build {
@@ -30,7 +34,7 @@ resource "docker_image" "worker" {
 # RabbitMQ
 resource "docker_container" "rabbitmq" {
   name  = "rabbitmq"
-  image = "rabbitmq:3-management"
+  image = docker_image.rabbitmq.name
   networks_advanced {
     name = docker_network.internal.name
   }
