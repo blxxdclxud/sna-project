@@ -9,6 +9,7 @@ A distributed task scheduling system designed for efficient management and distr
     - [🐋 Launching the project via Docker Compose](#launching-the-project-via-docker-compose)
     - [🪐 Launching the project via Terraform](#launching-the-project-via-terraform)
 - [📊 How to monitor the system status](#-how-to-monitor-the-system-status)
+- [👨🏻‍💻 Authors](#-authors): in this section you will find information about the students of this project 
 
 ## 📄 About the project
 The project was created as part of an academic project activity in which students demonstrate their skills with terraform, docker, CI/CD, Grafana, and Prometheus.
@@ -92,3 +93,8 @@ go build cmd/client/main.go
 ```
 ## 📊 How to monitor the system status
 Надо дописать про то, как использовать инструменты для мониторинга системы
+
+## 👨🏻‍💻 Authors
+- **Daniil Mayorov** d.mayorov@innopolis.university 
+- **Niyaz Gubaidullin** n.gubaidullin@innopolis.university
+- **Ramazan Nazmiev** r.nazmiev@innopolis.university
