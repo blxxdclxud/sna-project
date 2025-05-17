@@ -38,6 +38,9 @@ jobs:
             echo "Waiting..."
             sleep 5
           done
+      - name: List running containers
+        run: |
+          docker ps -a
       - name: Print logs of scheduler and workers
         run: |
           docker ps
