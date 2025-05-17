@@ -81,7 +81,7 @@ resource "docker_container" "worker" {
     "RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/"
   ]
   depends_on = [
-    docker_container.rabbitmq
+    docker_container.scheduler
   ]
   restart = "unless-stopped"
 }
