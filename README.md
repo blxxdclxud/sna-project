@@ -78,7 +78,7 @@ worker_count = 5
 ---
 This part must be done if the “terraform build” command does not work.
 
-**Attention!** VPN is required for this part.
+**Attention!** VPN is required for this part since terraform doesn't work in Russia.
 ``` bash
 cd .\terraform-local\
 terraform init
