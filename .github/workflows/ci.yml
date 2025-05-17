@@ -52,7 +52,7 @@ jobs:
         run: |
           echo "Waiting for workers to register with RabbitMQ..."
           sleep 15
-      - name: Run health checks on Scheduler
+      - name: Try to send task to system
         run: |
           echo "Checking Scheduler service health"
           sleep 10
