@@ -43,8 +43,7 @@ cd sna-project
 - Start a docker and run the project
 ```bash
 cd .\deployments\
-docker compose -f docker-compose.yml build
-docker compose -f docker-compose.yml up
+docker compose -f docker-compose.yml up --build
 ```
 #### Client side:
 - Build a file for the client and send the task through it
@@ -101,7 +100,31 @@ go build cmd/client/main.go
 ./main -file lua-examples/factorial.lua
 ```
 ## 📊 How to monitor the system status
-Надо дописать про то, как использовать инструменты для мониторинга системы
+#### 🧭 1. Access Grafana UI
+
+After starting the system with Docker Compose, open Grafana in your browser:
+```
+http://localhost:3000
+```
+
+
+#### 2. Log in
+
+- **Username**: `admin`
+- **Password**: `admin` (or set on first login)
+    
+
+> You may be prompted to change the password on first login.
+
+#### 📂 3. View Dashboards
+
+- Navigate to **"Dashboards"** and open the one named **"DJS"**
+
+
+#### 🔄 4. Refresh & Time Range
+
+- Use the time picker in the top-right to adjust the time range (e.g., _Last 15 minutes_)
+- Set a **refresh interval** (e.g., _every 10s_) for live updates
 
 ## 👨🏻‍💻 Authors
 - **Daniil Mayorov** d.mayorov@innopolis.university 
