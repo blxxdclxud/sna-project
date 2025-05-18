@@ -55,7 +55,7 @@ services:
       dockerfile: Dockerfile
       target: worker
     depends_on:
-      - test  # Ждёт завершения тестов
+      - test
     networks:
       - monitoring
 
@@ -81,6 +81,6 @@ services:
 
 volumes:
    grafana-storage:
-
+   
 networks:
   monitoring:
