@@ -49,6 +49,16 @@ services:
     networks:
       - monitoring
 
+  worker2:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: worker
+    depends_on:
+      - test  # Ждёт завершения тестов
+    networks:
+      - monitoring
+
   prometheus:
     image: prom/prometheus
     volumes:

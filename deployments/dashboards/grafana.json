@@ -18,13 +18,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 11,
   "links": [],
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem1tydmdu680e"
+        "uid": "bem73991t09a8d"
       },
       "fieldConfig": {
         "defaults": {
@@ -81,12 +81,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 7,
-        "x": 0,
+        "h": 8,
+        "w": 11,
+        "x": 1,
         "y": 0
       },
-      "id": 4,
+      "id": 2,
       "options": {
         "legend": {
           "calcs": [],
@@ -103,9 +103,76 @@
       "pluginVersion": "12.0.0",
       "targets": [
         {
+          "editorMode": "code",
+          "expr": "rate(worker_heartbeats_total[1m])",
+          "legendFormat": "{{__name__}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total heartbeats per minute",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bem73991t09a8d"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 11,
+        "x": 12,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "bem73991t09a8d"
+          },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "job_completed_total",
+          "expr": "worker_registered_total",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "{{__name__}}",
@@ -114,13 +181,13 @@
           "useBackend": false
         }
       ],
-      "title": "Completed jobs",
-      "type": "timeseries"
+      "title": "Total registered available workers",
+      "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem1tydmdu680e"
+        "uid": "bem73991t09a8d"
       },
       "fieldConfig": {
         "defaults": {
@@ -160,6 +227,7 @@
               "mode": "off"
             }
           },
+          "fieldMinMax": false,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -177,10 +245,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 9,
-        "y": 0
+        "h": 8,
+        "w": 12,
+        "x": 6,
+        "y": 8
       },
       "id": 3,
       "options": {
@@ -208,172 +276,28 @@
           "range": true,
           "refId": "A",
           "useBackend": false
-        }
-      ],
-      "title": "Submitted Jobs",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dem1tydmdu680e"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 9,
-        "x": 0,
-        "y": 6
-      },
-      "id": 2,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "12.0.0",
-      "targets": [
-        {
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "worker_registered_total",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "legendFormat": "{{__name__}}",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "title": "Available workers",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dem1tydmdu680e"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 10,
-        "x": 9,
-        "y": 6
-      },
-      "id": 1,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "12.0.0",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem1tydmdu680e"
+            "uid": "bem73991t09a8d"
           },
-          "editorMode": "code",
-          "expr": "rate(worker_heartbeats_total[1m])",
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "exemplar": false,
+          "expr": "job_completed_total",
+          "fullMetaSearch": false,
           "hide": false,
+          "includeNullMetadata": false,
           "instant": false,
+          "interval": "",
           "legendFormat": "{{__name__}}",
           "range": true,
-          "refId": "A"
+          "refId": "B",
+          "useBackend": false
         }
       ],
-      "title": "Heart Beats",
+      "title": "Total submitted/completed jobs",
       "type": "timeseries"
     }
   ],
@@ -384,12 +308,12 @@
     "list": []
   },
   "time": {
-    "from": "2025-05-16T02:09:07.690Z",
-    "to": "2025-05-16T14:09:07.690Z"
+    "from": "now-6h",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Distributed Job Scheduling",
-  "uid": "e8fff1cf-8390-49ef-a1f9-21f67eb8576e",
-  "version": 4
+  "title": "DJS",
+  "uid": "c4c243bd-6c2d-471d-aeda-3049cb24fd6a",
+  "version": 2
 }
