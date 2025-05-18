@@ -42,8 +42,8 @@ git clone https://github.com/blxxdclxud/sna-project.git
 - Start a docker and run the project
 ```bash
 cd .\deployments\
-docker compose -f docker-compose-way1.yml build
-docker compose -f docker-compose-way1.yml up
+docker compose -f docker-compose.yml build
+docker compose -f docker-compose.yml up
 ```
 #### Client side:
 - Build a file for the client and send the task through it
