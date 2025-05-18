@@ -55,6 +55,7 @@ go build cmd/client/main.go
 
 ### Launching the project via Terraform:
 *This way works only on Linux.*
+
 Getting the project up using Terraform
 #### Host and Workers side:
 - Download the project from github
