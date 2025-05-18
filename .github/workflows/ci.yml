@@ -24,7 +24,7 @@ jobs:
         working-directory: deployments
         run: |
           docker-compose -f docker-compose-way1.yml build
-          docker-compose -f docker-compose-way1.yml up
+          docker-compose -f docker-compose-way1.yml up &
       - name: Build Go client
         run: go build -o main cmd/client/main.go
       - name: Wait for services to be ready
