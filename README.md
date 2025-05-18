@@ -69,6 +69,12 @@ terraform build
 ```
 To confirm the creation, you must enter "yes"
 
+- To finish working with the system
+```bash
+terraform destroy
+```
+To confirm the creation, you must enter "yes"
+
 ---
 - To change the number of workers, do the following steps:
 ```bash
