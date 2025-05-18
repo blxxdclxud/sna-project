@@ -1,4 +1,4 @@
-# Создаем сети
+# Network
 resource "docker_network" "internal" {
   name     = "internal"
   internal = true
