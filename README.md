@@ -38,6 +38,7 @@ Getting the project up using docker compose
 - Download the project from github
 ```bash
 git clone https://github.com/blxxdclxud/sna-project.git
+cd sna-project
 ```
 - Start a docker and run the project
 ```bash
